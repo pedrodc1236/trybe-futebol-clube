@@ -1,6 +1,7 @@
 import { sign } from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
-import Users from '../models/UserModel';
+import Users from '../database/models/UserModel';
+import { IUserRole } from '../interfaces';
 
 type Login = {
   email: string;
@@ -13,11 +14,11 @@ type error = {
 };
 
 class LoginService {
-  validateBody = async (body: Login) => {
+  private _validateBody = async (body: Login) => {
     const { email, password } = body;
 
     if (!email || !password) {
-      return { code: 400, message: 'Some required fields are missing' };
+      return { code: 400, message: 'All fields must be filled' };
     }
     const userValid = await Users.findOne({ where: { email } });
     const userPassword = userValid ? await bcrypt.compare(password, userValid.password) : false;
@@ -27,7 +28,7 @@ class LoginService {
   };
 
   public authLogin = async (body: Login): Promise<string | error> => {
-    const validate = await this.validateBody(body);
+    const validate = await this._validateBody(body);
 
     if (validate.message) return validate;
 
@@ -40,6 +41,14 @@ class LoginService {
     });
 
     return token;
+  };
+
+  public validateLogin = async (email: string): Promise<IUserRole | undefined> => {
+    const user = await Users.findOne({ where: { email } });
+
+    const role = user?.getDataValue('role');
+
+    return { role };
   };
 }
 

@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import LoginService from '../services/loginService';
+import { ReqUser, IUserEmail } from '../interfaces';
 
 class LoginController {
   loginService: LoginService;
@@ -18,6 +19,14 @@ class LoginController {
     const token = loginValid;
 
     res.status(200).json({ token });
+  };
+
+  validateLogin = async (req: ReqUser, res: Response) => {
+    const { email } = req.user as IUserEmail;
+
+    const user = await this.loginService.validateLogin(email);
+
+    res.status(200).json({ role: user?.role });
   };
 }
 
