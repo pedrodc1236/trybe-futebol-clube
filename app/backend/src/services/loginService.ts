@@ -1,16 +1,11 @@
 import { sign } from 'jsonwebtoken';
 import * as bcrypt from 'bcryptjs';
 import User from '../database/models/UserModel';
-import { IUserRole } from '../interfaces';
+import { IUserRole, Error } from '../interfaces';
 
 type Login = {
   email: string;
   password: string;
-};
-
-type error = {
-  code: number;
-  message: string;
 };
 
 class LoginService {
@@ -27,7 +22,7 @@ class LoginService {
     return {};
   };
 
-  public authLogin = async (body: Login): Promise<string | error> => {
+  public authLogin = async (body: Login): Promise<string | Error> => {
     const validate = await this._validateBody(body);
 
     if (validate.message) return validate;

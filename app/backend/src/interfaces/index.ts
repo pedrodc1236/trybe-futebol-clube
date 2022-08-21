@@ -16,3 +16,8 @@ export interface ITeam {
   id: number;
   teamName: string;
 }
+
+export interface Error {
+  code: number;
+  message: string;
+}
