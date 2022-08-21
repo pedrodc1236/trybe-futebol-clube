@@ -11,3 +11,8 @@ export interface ReqUser extends Request {
 export interface IUserRole {
   role: string;
 }
+
+export interface ITeam {
+  id: number;
+  teamName: string;
+}
