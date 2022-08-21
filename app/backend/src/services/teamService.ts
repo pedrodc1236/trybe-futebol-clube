@@ -8,12 +8,11 @@ class TeamService {
     return allTeams;
   };
 
-  public getById = async (id: number): Promise<ITeam | Error> => {
+  public getById = async (id: number): Promise<ITeam | undefined> => {
     const team = await Team.findByPk(id);
 
-    if (!team) return throwCustomError('notFoundError', 'Team does not exist');
-
-    return team;
+    if (team === null) throwCustomError('notFoundError', 'Team does not exist');
+    if (team !== null) return team;
   };
 }
 
