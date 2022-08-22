@@ -38,10 +38,10 @@ class LoginService {
     return token;
   };
 
-  public validateLogin = async (email: string): Promise<IUserRole | undefined> => {
+  public validateLogin = async (email: string): Promise<IUserRole> => {
     const user = await User.findOne({ where: { email } });
 
-    const role = user?.getDataValue('role');
+    const { role } = user as User;
 
     return { role };
   };

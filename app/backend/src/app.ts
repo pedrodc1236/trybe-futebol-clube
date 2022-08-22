@@ -2,6 +2,7 @@ import * as express from 'express';
 import 'express-async-errors';
 import LoginRoute from './routes/login.route';
 import TeamRoute from './routes/team.route';
+import errorMiddleware from './middlewares/errorMiddleware';
 
 class App {
   public app: express.Express;
@@ -28,6 +29,7 @@ class App {
 
     this.app.use('/login', LoginRoute);
     this.app.use('/teams', TeamRoute);
+    this.app.use(errorMiddleware);
   }
 
   public start(PORT: string | number):void {

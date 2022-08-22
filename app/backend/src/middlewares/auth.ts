@@ -1,6 +1,6 @@
 import { Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import { ReqUser } from '../interfaces';
+import { ReqUser, IUserEmail } from '../interfaces';
 
 const secret = process.env.JWT_SECRET || 'jwt_secret';
 
@@ -11,7 +11,8 @@ const authMiddleware = (req: ReqUser, res: Response, next: NextFunction) => {
 
   try {
     const decoded = verify(token, secret);
-    const email = Object.values(decoded)[0];
+
+    const { email } = decoded as IUserEmail;
 
     req.user = { email };
 

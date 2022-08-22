@@ -26,7 +26,7 @@ class LoginController {
 
     const user = await this.loginService.validateLogin(email);
 
-    res.status(200).json({ role: user?.role });
+    res.status(200).json({ role: user.role });
   };
 }
 
