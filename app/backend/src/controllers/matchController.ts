@@ -22,6 +22,22 @@ class MatchController {
 
     res.status(200).json(allMatches);
   };
+
+  public create = async (req: Request, res: Response) => {
+    const { body } = req;
+
+    const newMatch = await this.matchService.create(body);
+
+    res.status(201).json(newMatch);
+  };
+
+  public finish = async (req: Request, res: Response) => {
+    const { id } = req.params;
+
+    await this.matchService.finish(Number(id));
+
+    res.status(200).json({ message: 'Finished' });
+  };
 }
 
 export default MatchController;

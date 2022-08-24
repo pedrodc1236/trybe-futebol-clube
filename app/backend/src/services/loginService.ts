@@ -12,6 +12,16 @@ class LoginService {
   private _validateBody = async (body: Login) => {
     const { email, password } = body;
 
+    if (password.length < 6) {
+      return { code: 400, message: 'Password is less than 6 characters' };
+    }
+
+    const regexEmail = /\S+@\S+\.\S+/;
+
+    if (!regexEmail.test(email)) {
+      return { code: 400, message: 'Invalid email' };
+    }
+
     if (!email || !password) {
       return { code: 400, message: 'All fields must be filled' };
     }

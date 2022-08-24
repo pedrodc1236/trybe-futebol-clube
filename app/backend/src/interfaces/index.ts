@@ -36,3 +36,10 @@ export interface IMatch {
     teamName: string,
   };
 }
+
+export interface MatchTeamsAndGoals {
+  homeTeam: number;
+  awayTeam: number;
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}
