@@ -1,4 +1,4 @@
-import { IMatch, MatchTeamsAndGoals } from '../interfaces/index';
+import { IMatch, MatchGoals, MatchTeamsAndGoals } from '../interfaces/index';
 import TeamModel from '../database/models/TeamModel';
 import Match from '../database/models/MatchModel';
 import throwCustomError from '../utils/throwCustomError';
@@ -40,6 +40,10 @@ class MatchService {
   private validateTeam = async (teamId: number) => {
     const teamExists = await TeamModel.findOne({ where: { id: teamId } });
 
+    if (!teamExists) {
+      throwCustomError('notFoundError', 'There is no team with such id!');
+    }
+
     return teamExists;
   };
 
@@ -55,12 +59,8 @@ class MatchService {
   public create = async (reqBody: MatchTeamsAndGoals): Promise<IMatch | undefined> => {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = reqBody;
 
-    const validateHomeTeam = await this.validateTeam(homeTeam);
-    const validateAwayTeam = await this.validateTeam(awayTeam);
-
-    if (!validateHomeTeam || !validateAwayTeam) {
-      throwCustomError('notFoundError', 'There is no team with such id!');
-    }
+    await this.validateTeam(homeTeam);
+    await this.validateTeam(awayTeam);
 
     this.validateReqBody(homeTeam, awayTeam);
 
@@ -90,6 +90,14 @@ class MatchService {
     await Match.update({ inProgress: false }, { where: { id } });
 
     return true;
+  };
+
+  public update = async (id: number, reqBody: MatchGoals): Promise<MatchGoals> => {
+    const { homeTeamGoals, awayTeamGoals } = reqBody;
+
+    await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+
+    return { homeTeamGoals, awayTeamGoals };
   };
 }
 

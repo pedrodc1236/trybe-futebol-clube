@@ -37,6 +37,11 @@ export interface IMatch {
   };
 }
 
+export interface MatchGoals {
+  homeTeamGoals: number;
+  awayTeamGoals: number;
+}
+
 export interface MatchTeamsAndGoals {
   homeTeam: number;
   awayTeam: number;

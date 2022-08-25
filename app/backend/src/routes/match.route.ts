@@ -9,5 +9,6 @@ const matchController = new MatchController();
 router.post('/', authMiddleware, matchController.create);
 router.get('/', matchController.getAll);
 router.patch('/:id/finish', matchController.finish);
+router.patch('/:id', matchController.update);
 
 export default router;
