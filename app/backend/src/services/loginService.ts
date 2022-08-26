@@ -18,13 +18,14 @@ class LoginService {
 
     const regexEmail = /\S+@\S+\.\S+/;
 
+    if (!email || !password) {
+      return { code: 400, message: 'All fields must be filled' };
+    }
+
     if (!regexEmail.test(email)) {
       return { code: 400, message: 'Invalid email' };
     }
 
-    if (!email || !password) {
-      return { code: 400, message: 'All fields must be filled' };
-    }
     const userValid = await User.findOne({ where: { email } });
     const userPassword = userValid ? await bcrypt.compare(password, userValid.password) : false;
     if (!userValid || !userPassword) return { code: 401, message: 'Incorrect email or password' };
@@ -32,7 +33,7 @@ class LoginService {
     return {};
   };
 
-  public authLogin = async (body: Login): Promise<string | Error> => {
+  public login = async (body: Login): Promise<string | Error> => {
     const validate = await this._validateBody(body);
 
     if (validate.message) return validate;

@@ -10,7 +10,7 @@ class LoginController {
 
   login = async (req: Request, res: Response) => {
     const { body } = req;
-    const loginValid = await this.loginService.authLogin(body);
+    const loginValid = await this.loginService.login(body);
 
     if (typeof loginValid === 'object') {
       return res.status(loginValid.code).json({ message: loginValid.message });
