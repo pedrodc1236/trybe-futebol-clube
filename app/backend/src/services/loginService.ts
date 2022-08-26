@@ -28,6 +28,7 @@ class LoginService {
 
     const userValid = await User.findOne({ where: { email } });
     const userPassword = userValid ? await bcrypt.compare(password, userValid.password) : false;
+
     if (!userValid || !userPassword) return { code: 401, message: 'Incorrect email or password' };
 
     return {};
