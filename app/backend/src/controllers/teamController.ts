@@ -8,7 +8,7 @@ class TeamController {
     this.teamService = new TeamService();
   }
 
-  public getAll = async (req: Request, res: Response) => {
+  public getAll = async (_req: Request, res: Response) => {
     const allTeams = await this.teamService.getAll();
 
     res.status(200).json(allTeams);

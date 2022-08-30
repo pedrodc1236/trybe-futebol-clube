@@ -23,7 +23,7 @@ const reqBody: bodyLogin = {
   password: 'secret_user',
 }
 
-describe('Test the login route', () => {
+describe('Test the Login route', () => {
   describe('POST /login error', () => {
     beforeEach(() => {
       sinon.stub(User, "findOne").resolves(null)
