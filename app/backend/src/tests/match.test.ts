@@ -5,13 +5,10 @@ import * as chai from 'chai';
 import chaiHttp = require('chai-http');
 import { app } from '../app';
 import Match from '../database/models/MatchModel';
-import MatchService from '../services/matchService';
 
 chai.use(chaiHttp);
 
 const { expect } = chai;
-
-const matchService = new MatchService();
 
 const matchesMock: IMatch[] = [
   {
