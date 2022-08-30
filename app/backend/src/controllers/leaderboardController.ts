@@ -26,6 +26,19 @@ class LeaderboardController {
 
     res.status(200).json(sortLeaderboad);
   };
+
+  leaderboardAway = async (_req: Request, res: Response) => {
+    const allTeams = await this.teamService.getAll();
+
+    const allMatches = await this.matchService.getAllInProgress(false);
+
+    const leaderboardHome = await Promise.all(allTeams.map((team) =>
+      this.leaderboardService.leaderboardAway(team, allMatches)));
+
+    const sortLeaderboad = await this.leaderboardService.sortLeaderboad(leaderboardHome);
+
+    res.status(200).json(sortLeaderboad);
+  };
 }
 
 export default LeaderboardController;
