@@ -6,6 +6,11 @@ type balanceMatch = {
   totalLosses: number;
 };
 
+type goalsType = {
+  goalsFavor: number,
+  goalsOwn: number,
+};
+
 class LeaderboardService {
   private teamHomeMatches = (team: ITeam, matches: IMatch[]) => {
     const filteredMatches = matches.filter((match) => match.homeTeam === team.id);
@@ -152,6 +157,67 @@ class LeaderboardService {
       goalsOwn,
       goalsBalance: goalsFavor - goalsOwn,
       efficiency: Number(((points / (allMatchesTeamAway.length * 3)) * 100).toFixed(2)),
+    };
+  };
+
+  private sunBalance = (balanceHome: balanceMatch, balanceAway: balanceMatch) => {
+    const newBalance = {
+      totalVictories: balanceHome.totalVictories + balanceAway.totalVictories,
+      totalDraws: balanceHome.totalDraws + balanceAway.totalDraws,
+      totalLosses: balanceHome.totalLosses + balanceAway.totalLosses,
+    };
+
+    return newBalance;
+  };
+
+  private sunGoals = (goalsForHome: goalsType, goalsForAway: goalsType): goalsType => {
+    const goals = {
+      goalsFavor: goalsForHome.goalsFavor + goalsForAway.goalsFavor,
+      goalsOwn: goalsForHome.goalsOwn + goalsForAway.goalsOwn,
+    };
+
+    return goals;
+  };
+
+  private utilBalanceTeam = (allMatchesHome: IMatch[], allMatchesAway: IMatch[]) => {
+    const balanceHome = this.matchBalanceHome(allMatchesHome);
+    const balanceAway = this.matchBalanceAway(allMatchesAway);
+
+    const balanceTeam = this.sunBalance(balanceHome, balanceAway);
+
+    return balanceTeam;
+  };
+
+  private utilGoals = (allMatchesHome: IMatch[], allMatchesAway: IMatch[]) => {
+    const goalsHome = this.goalsForAndAgainstHome(allMatchesHome);
+    const goalsAway = this.goalsForAndAgainstAway(allMatchesAway);
+    const goals = this.sunGoals(goalsHome, goalsAway);
+
+    return goals;
+  };
+
+  public leaderboard = async (team: ITeam, matches: IMatch[]): Promise<ILeaderboard> => {
+    const allMatchesTeamHome = this.teamHomeMatches(team, matches);
+    const allMatchesTeamAway = this.teamAwayMatches(team, matches);
+
+    const balanceTeam = this.utilBalanceTeam(allMatchesTeamHome, allMatchesTeamAway);
+
+    const points = this.countPoints(balanceTeam);
+
+    const goals = this.utilGoals(allMatchesTeamHome, allMatchesTeamAway);
+
+    const sunMatches = allMatchesTeamHome.length + allMatchesTeamAway.length;
+    return {
+      name: team.teamName,
+      totalPoints: points,
+      totalGames: allMatchesTeamHome.length + allMatchesTeamAway.length,
+      totalVictories: balanceTeam.totalVictories,
+      totalDraws: balanceTeam.totalDraws,
+      totalLosses: balanceTeam.totalLosses,
+      goalsFavor: goals.goalsFavor,
+      goalsOwn: goals.goalsOwn,
+      goalsBalance: goals.goalsFavor - goals.goalsOwn,
+      efficiency: Number(((points / (sunMatches * 3)) * 100).toFixed(2)),
     };
   };
 

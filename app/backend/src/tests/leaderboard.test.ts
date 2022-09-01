@@ -16,4 +16,22 @@ describe('Test the Leaderboard route', () => {
       expect(response.status).to.equal(200);
     })
   })
+
+  describe('should return status 200', () => {
+    it ('GET /leaderboard/away', async () => {
+      const response = await chai.request(app)
+        .get('/leaderboard/away');
+
+      expect(response.status).to.equal(200);
+    })
+  })
+
+  describe('should return status 200', () => {
+    it ('GET /leaderboard', async () => {
+      const response = await chai.request(app)
+        .get('/leaderboard');
+
+      expect(response.status).to.equal(200);
+    })
+  })
 })
