@@ -1,5 +1,7 @@
 <h1 align="center"> Projeto Trybe Futebol Clube ⚽ </h1>
 
+Essa é uma aplicação <strong>full stack</strong>, onde me foi entregue o front-end e o desafio de contruir a parte back-end do projeto, desde popular e consumir os dados diretamente do banco de dados através da ORM Sequelize até criar criar testes de integração.
+
  <div align="center">
  
  ![TypeScript](https://img.shields.io/badge/typescript-%23007ACC.svg?style=for-the-badge&logo=typescript&logoColor=white)
@@ -13,8 +15,6 @@
 <br/> <br/>
 
 <h2 align="left"> Sobre: </h2>
-
-Essa é uma aplicação <strong>full stack</strong>, onde me foi entregue o front-end e o desafio de contruir a parte back-end do projeto, desde popular e consumir os dados diretamente do banco de dados através da ORM Sequelize até criar criar testes de integração.
 
 O TFC é um site informativo sobre partidas e classificações de futebol!
 
