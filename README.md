@@ -82,7 +82,7 @@ Após cada um dos passos, haverá um exemplo do comando a ser digitado para faze
 
   ⚠ Atenção ⚠ Não rode o comando npm audit fix! Ele atualiza várias dependências do projeto, e essa atualização gera conflitos com o avaliador.
 
-<h2 align="left">Rodanr o projeto de forma local: </h2>
+<h2 align="left">Rodando o projeto de forma local: </h2>
 
 🚪 **FRONT-END**
  - Acesse o caminho `http://localhost:3000/` no navegador que preferir;
