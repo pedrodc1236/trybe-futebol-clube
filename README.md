@@ -1,6 +1,6 @@
 <h1 align="center"> Projeto Trybe Futebol Clube ⚽ </h1>
 
-Essa é uma aplicação <strong>full stack</strong>, onde me foi entregue o front-end e o desafio de contruir a parte back-end do projeto, desde popular e consumir os dados diretamente do banco de dados através da ORM Sequelize até criar criar testes de integração.
+Essa é uma aplicação <strong>full stack</strong>, onde me foi entregue o front-end e o desafio de contruir a parte back-end do projeto, desde popular e consumir os dados diretamente do banco de dados através da ORM Sequelize até criar testes de integração.
 
  <div align="center">
  
